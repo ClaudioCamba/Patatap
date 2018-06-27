@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Patatap</title>
+  <script src="assets/lib/paper-full.js" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.13/howler.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="assets/css/patatap.css" type="text/css">
+  <script type="text/paperscript" canvas="myCanvas">
+
+
+var keyData = {
+  q: {
+    color: "#00FF7F",
+    sound: new Howl({
+      src: ['assets/audio/bubbles.mp3']
+    })
+  },
+  w: {
+    color: "#FFFF00",
+    sound: new Howl({
+      src: ['assets/audio/clay.mp3']
+    })
+  },
+  e: {
+    color: "#EE82EE",
+    sound: new Howl({
+      src: ['assets/audio/confetti.mp3']
+    })
+  },
+  r: {
+    color: "#40E0D0",
+    sound: new Howl({
+      src: ['assets/audio/corona.mp3']
+    })
+  },
+  t: {
+    color: "#FF6347",
+    sound: new Howl({
+      src: ['assets/audio/dotted-spiral.mp3']
+    })
+  },
+  y: {
+    color: "#6A5ACD",
+    sound: new Howl({
+      src: ['assets/audio/flash-1.mp3']
+    })
+  },
+  u: {
+    color: "#87CEEB",
+    sound: new Howl({
+      src: ['assets/audio/flash-2.mp3']
+    })
+  },
+  i: {
+    color: "#00FF00",
+    sound: new Howl({
+      src: ['assets/audio/flash-3.mp3']
+    })
+  },
+  o: {
+    color: "#663399",
+    sound: new Howl({
+      src: ['assets/audio/glimmer.mp3']
+    })
+  },
+  p: {
+    color: "#FFEFD5",
+    sound: new Howl({
+      src: ['assets/audio/moon.mp3']
+    })
+  },
+  a: {
+    color: "#98FB98",
+    sound: new Howl({
+      src: ['assets/audio/pinwheel.mp3']
+    })
+  },
+  s: {
+    color: "#FFA500",
+    sound: new Howl({
+      src: ['assets/audio/piston-1.mp3']
+    })
+  },
+  d: {
+    color: "#B0C4DE",
+    sound: new Howl({
+      src: ['assets/audio/piston-2.mp3']
+    })
+  },
+  f: {
+    color: "#87CEFA",
+    sound: new Howl({
+      src: ['assets/audio/piston-3.mp3']
+    })
+  },
+  g: {
+    color: "#ADFF2F",
+    sound: new Howl({
+      src: ['assets/audio/prism-1.mp3']
+    })
+  },
+  h: {
+    color: "#FF69B4",
+    sound: new Howl({
+      src: ['assets/audio/prism-2.mp3']
+    })
+  },
+  j: {
+    color: "#FFD700",
+    sound: new Howl({
+      src: ['assets/audio/prism-3.mp3']
+    })
+  },
+  k: {
+    color: "#1E90FF",
+    sound: new Howl({
+      src: ['assets/audio/splits.mp3']
+    })
+  },
+  l: {
+    color: "#FF1493",
+    sound: new Howl({
+      src: ['assets/audio/squiggle.mp3']
+    })
+  },
+  z: {
+    color: "#00CED1",
+    sound: new Howl({
+      src: ['assets/audio/strike.mp3']
+    })
+  },
+  x: {
+    color: "#DAA520",
+    sound: new Howl({
+      src: ['assets/audio/suspension.mp3']
+    })
+  },
+  c: {
+    color: "#DC143C",
+    sound: new Howl({
+      src: ['assets/audio/timer.mp3']
+    })
+  },
+  v: {
+    color: "#00FFFF",
+    sound: new Howl({
+      src: ['assets/audio/ufo.mp3']
+    })
+  },
+  b: {
+    color: "#F0E68C",
+    sound: new Howl({
+      src: ['assets/audio/veil.mp3']
+    })
+  },
+  n: {
+    color: "#FFFF00",
+    sound: new Howl({
+      src: ['assets/audio/wipe.mp3']
+    })
+  },
+  m: {
+    color: "#98FB98",
+    sound: new Howl({
+      src: ['assets/audio/zig-zag.mp3']
+    })
+  },
+}
+
+
+  var circles = [];
+
+  function onKeyDown(event) {
+    if (keyData[event.key]){
+      var maxPoint = new Point(view.size.width, view.size.height);
+      var randomPoint = Point.random();
+      var point = maxPoint * randomPoint;
+      var newCircle = new Path.Circle(point, 500)
+      newCircle.fillColor = keyData[event.key].color
+      keyData[event.key].sound.play();
+      circles.push(newCircle);
+    }
+  }
+
+  function onFrame(event) {
+    for(var i = 0; i < circles.length; i++){
+      circles[i].fillColor.hue += 1;
+      circles[i].scale(.9);
+      if(circles[i].area < 1){
+        circles[i].remove(); // remove the circle from the canvas
+        circles.splice(i, 1); // remove the circle from the array
+        i--; // decrement i so that the loop doesn't skip a circle because of .splice()
+      }
+    }
+  }
+
+</script>
+</head>
+<body>
+    <canvas id="myCanvas" resize></canvas>
+</body>
+</html>
